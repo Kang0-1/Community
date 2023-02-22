@@ -1,5 +1,6 @@
-package com.kang.community;
+package com.kang;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,10 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author 康
  */
 @SpringBootApplication
-public class CommunityApplication {
-
+@MapperScan(basePackages = "com.kang.mapper")
+public class CommunityApp {
     public static void main(String[] args) {
-        SpringApplication.run(CommunityApplication.class, args);
+        SpringApplication.run(CommunityApp.class,args);
     }
-
 }
