@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kang.mapper.RecordMapper">
+    <resultMap id="BaseResultMap" type="com.kang.entity.Record">
+        <id column="record_id" jdbcType="VARCHAR" property="recordId"/>
+        <result column="record_describe" jdbcType="VARCHAR" property="recordDescribe"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+        <result column="coin_change" jdbcType="VARCHAR" property="coinChange"/>
+        <result column="record_createtime" jdbcType="TIMESTAMP" property="recordCreatetime"/>
+        <result column="works_type" jdbcType="INTEGER" property="worksType"/>
+        <result column="works_id" jdbcType="VARCHAR" property="worksId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        record_id
+        , record_describe, author_id, coin_change, record_createtime, works_type,
+    works_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_record
+        where record_id = #{recordId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByParam" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_record
+        <where>
+            <if test="authorId != null">
+                and author_id = #{authorId}
+            </if>
+            <if test="worksId != null and worksId != ''">
+                and works_id = #{worksId}
+            </if>
+        </where>
+        order by record_createtime desc
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from ttc_record
+        where record_id = #{recordId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.kang.entity.Record">
+        insert into ttc_record (record_id, record_describe, author_id,
+                                coin_change, record_createtime, works_type,
+                                works_id)
+        values (#{recordId,jdbcType=VARCHAR}, #{recordDescribe,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT},
+                #{coinChange,jdbcType=VARCHAR}, #{recordCreatetime,jdbcType=TIMESTAMP}, #{worksType,jdbcType=INTEGER},
+                #{worksId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.kang.entity.Record">
+        insert into ttc_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                record_id,
+            </if>
+            <if test="recordDescribe != null">
+                record_describe,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="coinChange != null">
+                coin_change,
+            </if>
+            <if test="recordCreatetime != null">
+                record_createtime,
+            </if>
+            <if test="worksType != null">
+                works_type,
+            </if>
+            <if test="worksId != null">
+                works_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">
+                #{recordId,jdbcType=VARCHAR},
+            </if>
+            <if test="recordDescribe != null">
+                #{recordDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="coinChange != null">
+                #{coinChange,jdbcType=VARCHAR},
+            </if>
+            <if test="recordCreatetime != null">
+                #{recordCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="worksType != null">
+                #{worksType,jdbcType=INTEGER},
+            </if>
+            <if test="worksId != null">
+                #{worksId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Record">
+        update ttc_record
+        <set>
+            <if test="recordDescribe != null">
+                record_describe = #{recordDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="coinChange != null">
+                coin_change = #{coinChange,jdbcType=VARCHAR},
+            </if>
+            <if test="recordCreatetime != null">
+                record_createtime = #{recordCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="worksType != null">
+                works_type = #{worksType,jdbcType=INTEGER},
+            </if>
+            <if test="worksId != null">
+                works_id = #{worksId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where record_id = #{recordId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kang.entity.Record">
+        update ttc_record
+        set record_describe   = #{recordDescribe,jdbcType=VARCHAR},
+            author_id         = #{authorId,jdbcType=BIGINT},
+            coin_change       = #{coinChange,jdbcType=VARCHAR},
+            record_createtime = #{recordCreatetime,jdbcType=TIMESTAMP},
+            works_type        = #{worksType,jdbcType=INTEGER},
+            works_id          = #{worksId,jdbcType=VARCHAR}
+        where record_id = #{recordId,jdbcType=VARCHAR}
+    </update>
+</mapper>

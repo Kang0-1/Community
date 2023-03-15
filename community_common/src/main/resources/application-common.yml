@@ -1,0 +1,13 @@
+file:
+  upload:
+    path: E:/Intellij IDEA/Java_LocalProject/Community/file/uploadFile/
+
+jwt:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: abcdefghijklmnopqrstuvwxyz
+  # 令牌有效期     一天过期
+  expireTime: 1
+  # vue页面定义存储token在cookie中的key
+  tokenKey: User-Token

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kang.mapper.PraiseMapper">
+    <resultMap id="BaseResultMap" type="com.kang.entity.Praise">
+        <result column="praise_id" jdbcType="BIGINT" property="praiseId"/>
+        <result column="works_id" jdbcType="VARCHAR" property="worksId"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        praise_id
+        , works_id, author_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_praise
+        where praise_id = #{praiseId,jdbcType=BIGINT}
+    </select>
+    <select id="selectByParam" parameterType="com.kang.entity.Praise" resultType="integer">
+        select
+        count(1)
+        from ttc_praise
+        <where>
+            <if test="praiseId != null">
+                and praise_id = #{praiseId}
+            </if>
+            <if test="worksId != null and worksId != ''">
+                and works_id=#{worksId}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from ttc_praise
+        where praise_id = #{praiseId,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByParam" parameterType="java.lang.Long">
+        delete from ttc_praise
+        <where>
+            <if test="praiseId != null">
+                and praise_id = #{praiseId}
+            </if>
+            <if test="worksId != null and worksId != ''">
+                and works_id = #{worksId}
+            </if>
+        </where>
+    </delete>
+    <insert id="insert" parameterType="com.kang.entity.Praise">
+        insert into ttc_praise (praise_id, works_id, author_id)
+        values (#{praiseId,jdbcType=BIGINT}, #{worksId,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.kang.entity.Praise">
+        insert into ttc_praise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="praiseId != null">
+                praise_id,
+            </if>
+            <if test="worksId != null">
+                works_id,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="praiseId != null">
+                #{praiseId,jdbcType=BIGINT},
+            </if>
+            <if test="worksId != null">
+                #{worksId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Praise">
+        update ttc_praise
+        <set>
+            <if test="worksId != null">
+                works_id = #{worksId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where praise_id = #{praiseId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kang.entity.Praise">
+        update ttc_praise
+        set works_id  = #{worksId,jdbcType=VARCHAR},
+            author_id = #{authorId,jdbcType=BIGINT}
+        where praise_id = #{praiseId,jdbcType=BIGINT}
+    </update>
+</mapper>

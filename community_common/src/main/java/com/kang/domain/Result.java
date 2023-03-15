@@ -41,6 +41,10 @@ public class Result {
     }
 
 
+    public  Result setData(Object data){
+        return result(200,"成功!",data);
+    }
+
     /**
      * 失败 返回结果
      */
