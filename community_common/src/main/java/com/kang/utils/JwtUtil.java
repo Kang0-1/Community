@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,13 +15,13 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    @Value("jwt.expire")
-    private Long expire;
+    @Value("${jwt.expireTime}")
+    private long expire;
 
-    @Value("jwt.secret")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("jwt.header")
+    @Value("${jwt.header}")
     private String header;
 
 
@@ -39,7 +40,7 @@ public class JwtUtil {
                 .setIssuedAt(nowDate)
                 // 1天過期
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, secret)  // 设置签名 使用HS512算法 并设置SecretKey(字符串)
                 .compact();
     }
 
