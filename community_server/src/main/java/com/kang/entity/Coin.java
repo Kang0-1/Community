@@ -30,7 +30,7 @@ public class Coin implements Serializable {
     private Long coinOwner;
     
     /**T币数量*/
-    private Object coinNum;
+    private Double coinNum;
     
     /**创建时间*/
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
