@@ -15,6 +15,7 @@ import java.util.List;
 @Mapper
 public interface FavoriteMapper {
 
+    void insertSelective(Favorite favorite);
 }
 
 

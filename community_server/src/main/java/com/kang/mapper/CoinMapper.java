@@ -15,6 +15,11 @@ import java.util.List;
 @Mapper
 public interface CoinMapper {
 
+    Coin selectByOwner(Long userId);
+
+    void updateByPrimaryKey(Coin coin);
+
+    void insertSelective(Coin coin);
 }
 
 

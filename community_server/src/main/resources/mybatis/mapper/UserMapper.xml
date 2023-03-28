@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.UserMapper">
+
     <resultMap id="BaseResultMap" type="com.kang.entity.User">
         <id column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -16,53 +17,12 @@
         <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
         <result column="pay_password" jdbcType="VARCHAR" property="payPassword"/>
     </resultMap>
+    
+    
     <sql id="Base_Column_List">
-        user_id
-        , user_name, user_password, nick_name, user_role, user_sex, user_avatar, user_sign,
-    update_time, create_time, login_date, user_email,pay_password
+        user_id,user_name,user_password,nick_name,user_role,user_sex,user_avatar,user_sign,
+            update_time,create_time,login_date,user_email,pay_password
     </sql>
-
-    <select id="selectUserByParam" parameterType="com.kang.entity.User" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from ttc_user
-        <where>
-            <if test="userName != null">
-                and user_name = #{userName}
-            </if>
-            <if test="userEmail != null">
-                and user_email = #{userEmail}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
-        </where>
-    </select>
-    <select id="selectUserList"  resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from ttc_user
-    </select>
-    <select id="selectUserRole"  resultType="string" parameterType="integer">
-        select
-            user_role
-        from ttc_user
-        where user_id = #{userId}
-    </select>
-
-    <select id="selectSomeNumById" parameterType="java.lang.Long" resultType="com.kang.entity.vo.SomeNum">
-        select
-         (select count(1) from ttc_attention where fans_id= #{uid}) as followNum,
-          (select count(1) from ttc_attention where idol_id= #{uid}) as fansNum,
-          (select count(1) from ttc_praise where author_id= #{uid}) as praiseNum
-    </select>
-
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from ttc_user
-        where user_id = #{userId}
-    </select>
 
     <insert id="insertSelective" parameterType="com.kang.entity.User">
         insert into ttc_user
@@ -104,7 +64,7 @@
                 user_email,
             </if>
             <if test="payPassword != null">
-                pay_password,
+                pay_password
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -150,69 +110,37 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.User">
-        update ttc_user
-        <set>
-            <if test="userName != null">
-                user_name = #{userName,jdbcType=VARCHAR},
-            </if>
-            <if test="userPassword != null">
-                user_password = #{userPassword,jdbcType=VARCHAR},
-            </if>
-            <if test="nickName != null">
-                nick_name = #{nickName,jdbcType=VARCHAR},
-            </if>
-            <if test="userRole != null">
-                user_role = #{userRole,jdbcType=VARCHAR},
-            </if>
-            <if test="userSex != null">
-                user_sex = #{userSex,jdbcType=VARCHAR},
-            </if>
-            <if test="userAvatar != null">
-                user_avatar = #{userAvatar,jdbcType=VARCHAR},
-            </if>
-            <if test="userSign != null">
-                user_sign = #{userSign,jdbcType=VARCHAR},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="loginDate != null">
-                login_date = #{loginDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="userEmail != null">
-                user_email = #{userEmail,jdbcType=VARCHAR},
-            </if>
-            <if test="payPassword != null">
-                pay_password = #{payPassword,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where user_id = #{userId,jdbcType=BIGINT}
-    </update>
     <update id="updateByPrimaryKey" parameterType="com.kang.entity.User">
         update ttc_user
-        set user_name     = #{userName,jdbcType=VARCHAR},
-            user_password = #{userPassword,jdbcType=VARCHAR},
-            nick_name     = #{nickName,jdbcType=VARCHAR},
-            user_role     = #{userRole,jdbcType=VARCHAR},
-            user_sex      = #{userSex,jdbcType=VARCHAR},
-            user_avatar   = #{userAvatar,jdbcType=VARCHAR},
-            user_sign     = #{userSign,jdbcType=VARCHAR},
-            update_time   = #{updateTime,jdbcType=TIMESTAMP},
-            create_time   = #{createTime,jdbcType=TIMESTAMP},
-            login_date    = #{loginDate,jdbcType=TIMESTAMP},
-            user_email    = #{userEmail,jdbcType=VARCHAR},
-            pay_password    = #{payPassword,jdbcType=VARCHAR}
+        set user_name     =#{userName,jdbcType=VARBINARY},
+            user_password =#{userPassword,jdbcType=VARBINARY},
+            nick_name     =#{nickName,jdbcType=VARBINARY},
+            user_role     =#{userRole,jdbcType=VARBINARY},
+            user_sex      =#{userSex,jdbcType=VARBINARY},
+            user_avatar   =#{userAvatar,jdbcType=VARBINARY},
+            user_sign     =#{userSign,jdbcType=VARBINARY},
+            update_time   =#{updateTime,jdbcType=TIMESTAMP},
+            create_time   =#{createTime,jdbcType=TIMESTAMP},
+            login_date   =#{loginDate,jdbcType=TIMESTAMP},
+            user_email   =#{userEmail,jdbcType=VARCHAR},
+            pay_password   =#{payPassword,jdbcType=VARCHAR}
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
 
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete
+    <select id="selectUserByParam" resultType="com.kang.entity.User">
+        select
+            <include refid="Base_Column_List"/>
         from ttc_user
-        where user_id = #{userId,jdbcType=BIGINT}
-    </delete>
+        <where>
+            <if test="userName != null">
+                user_name = #{userName}
+            </if>
+            <if test="userEmail != null">
+                and user_email = #{userEmail}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
 </mapper>

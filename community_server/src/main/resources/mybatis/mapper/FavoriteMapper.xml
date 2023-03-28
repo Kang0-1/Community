@@ -1,94 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.FavoriteMapper">
-  <resultMap id="BaseResultMap" type="com.kang.entity.Favorite">
-    <id column="favorite_id" jdbcType="VARCHAR" property="favoriteId" />
-    <result column="favorite_name" jdbcType="VARCHAR" property="favoriteName" />
-    <result column="favorite_owner" jdbcType="BIGINT" property="favoriteOwner" />
-    <result column="favorite_createtime" jdbcType="TIMESTAMP" property="favoriteCreatetime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    favorite_id, favorite_name, favorite_owner, favorite_createtime
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from ttc_favorite
-    where favorite_id = #{favoriteId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.Favorite">
-    select
-    <include refid="Base_Column_List" />
-    from ttc_favorite
-    <where>
-      <if test="favoriteOwner != null">
-        and favorite_owner = #{favoriteOwner}
-      </if>
-      <if test="favoriteName != null and favoriteName != ''">
-        and favorite_name = #{favoriteName}
-      </if>
-    </where>
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from ttc_favorite
-    where favorite_id = #{favoriteId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.kang.entity.Favorite">
-    insert into ttc_favorite (favorite_id, favorite_name, favorite_owner, favorite_createtime)
-    values (#{favoriteId,jdbcType=VARCHAR}, #{favoriteName,jdbcType=VARCHAR}, #{favoriteOwner,jdbcType=VARCHAR},
-       #{favoriteCreatetime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.kang.entity.Favorite">
-    insert into ttc_favorite
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="favoriteId != null">
-        favorite_id,
-      </if>
-      <if test="favoriteName != null">
-        favorite_name,
-      </if>
-      <if test="favoriteOwner != null">
-        favorite_owner,
-      </if>
-      <if test="favoriteCreatetime != null">
-        favorite_createtime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="favoriteId != null">
-        #{favoriteId,jdbcType=VARCHAR},
-      </if>
-      <if test="favoriteName != null">
-        #{favoriteName,jdbcType=VARCHAR},
-      </if>
-      <if test="favoriteOwner != null">
-        #{favoriteOwner,jdbcType=VARCHAR},
-      </if>
-      <if test="favoriteCreatetime != null">
-        #{favoriteCreatetime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Favorite">
-    update ttc_favorite
-    <set>
-      <if test="favoriteName != null">
-        favorite_name = #{favoriteName,jdbcType=VARCHAR},
-      </if>
-      <if test="favoriteOwner != null">
-        favorite_owner = #{favoriteOwner,jdbcType=VARCHAR},
-      </if>
-      <if test="favoriteCreatetime != null">
-        favorite_createtime = #{favoriteCreatetime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where favorite_id = #{favoriteId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kang.entity.Favorite">
-    update ttc_favorite
-    set favorite_name = #{favoriteName,jdbcType=VARCHAR},
-      favorite_owner = #{favoriteOwner,jdbcType=VARCHAR},
-      favorite_createtime = #{favoriteCreatetime,jdbcType=TIMESTAMP}
-    where favorite_id = #{favoriteId,jdbcType=VARCHAR}
-  </update>
+
+    <resultMap id="BaseResultMap" type="com.kang.entity.Favorite">
+        <id column="favorite_id" jdbcType="VARCHAR" property="favoriteId" />
+        <result column="favorite_name" jdbcType="VARCHAR" property="favoriteName" />
+        <result column="favorite_owner" jdbcType="BIGINT" property="favoriteOwner" />
+        <result column="favorite_createtime" jdbcType="TIMESTAMP" property="favoriteCreatetime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        favorite_id, favorite_name, favorite_owner, favorite_createtime
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.Favorite">
+        insert into ttc_favorite
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="favoriteId != null">
+                favorite_id,
+            </if>
+            <if test="favoriteName != null">
+                favorite_name,
+            </if>
+            <if test="favoriteOwner != null">
+                favorite_owner,
+            </if>
+            <if test="favoriteCreatetime != null">
+                favorite_createtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="favoriteId != null">
+                #{favoriteId,jdbcType=VARCHAR},
+            </if>
+            <if test="favoriteName != null">
+                #{favoriteName,jdbcType=VARCHAR},
+            </if>
+            <if test="favoriteOwner != null">
+                #{favoriteOwner,jdbcType=VARCHAR},
+            </if>
+            <if test="favoriteCreatetime != null">
+                #{favoriteCreatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
 </mapper>

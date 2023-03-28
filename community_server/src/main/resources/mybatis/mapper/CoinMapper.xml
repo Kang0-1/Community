@@ -1,93 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.CoinMapper">
-  <resultMap id="BaseResultMap" type="com.kang.entity.Coin">
-    <id column="coin_id" jdbcType="VARCHAR" property="coinId" />
-    <result column="coin_owner" jdbcType="BIGINT" property="coinOwner" />
-    <result column="coin_num" jdbcType="DOUBLE" property="coinNum" />
-    <result column="coin_createtime" jdbcType="TIMESTAMP" property="coinCreatetime" />
-    <result column="coin_updatetime" jdbcType="TIMESTAMP" property="coinUpdatetime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    coin_id, coin_owner, coin_num, coin_createtime, coin_updatetime
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from ttc_coin
-    where coin_id = #{coinId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByOwner" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from ttc_coin
-    where coin_owner = #{userId,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from ttc_coin
-    where coin_id = #{coinId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insertSelective" parameterType="com.kang.entity.Coin">
-    insert into ttc_coin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="coinId != null">
-        coin_id,
-      </if>
-      <if test="coinOwner != null">
-        coin_owner,
-      </if>
-      <if test="coinNum != null">
-        coin_num,
-      </if>
-      <if test="coinCreatetime != null">
-        coin_createtime,
-      </if>
-      <if test="coinUpdatetime != null">
-        coin_updatetime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="coinId != null">
-        #{coinId,jdbcType=VARCHAR},
-      </if>
-      <if test="coinOwner != null">
-        #{coinOwner,jdbcType=BIGINT},
-      </if>
-      <if test="coinNum != null">
-        #{coinNum,jdbcType=DOUBLE},
-      </if>
-      <if test="coinCreatetime != null">
-        #{coinCreatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="coinUpdatetime != null">
-        #{coinUpdatetime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Coin">
-    update ttc_coin
-    <set>
-      <if test="coinOwner != null">
-        coin_owner = #{coinOwner,jdbcType=BIGINT},
-      </if>
-      <if test="coinNum != null">
-        coin_num = #{coinNum,jdbcType=DOUBLE},
-      </if>
-      <if test="coinCreatetime != null">
-        coin_createtime = #{coinCreatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="coinUpdatetime != null">
-        coin_updatetime = #{coinUpdatetime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where coin_id = #{coinId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kang.entity.Coin">
-    update ttc_coin
-    set coin_owner = #{coinOwner,jdbcType=BIGINT},
-      coin_num = #{coinNum,jdbcType=DOUBLE},
-      coin_createtime = #{coinCreatetime,jdbcType=TIMESTAMP},
-      coin_updatetime = #{coinUpdatetime,jdbcType=TIMESTAMP}
-    where coin_id = #{coinId,jdbcType=VARCHAR}
-  </update>
+
+    <resultMap id="BaseResultMap" type="com.kang.entity.Coin">
+        <id column="coin_id" jdbcType="VARCHAR" property="coinId" />
+        <result column="coin_owner" jdbcType="BIGINT" property="coinOwner" />
+        <result column="coin_num" jdbcType="DOUBLE" property="coinNum" />
+        <result column="coin_createtime" jdbcType="TIMESTAMP" property="coinCreatetime" />
+        <result column="coin_updatetime" jdbcType="TIMESTAMP" property="coinUpdatetime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        coin_id, coin_owner, coin_num, coin_createtime, coin_updatetime
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.Coin">
+        insert into ttc_coin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coinId!=null">
+                coin_id,
+            </if>
+            <if test="coinOwner!=null">
+                coin_owner,
+            </if>
+            <if test="coinNum!=null">
+                coin_num,
+            </if>
+            <if test="coinCreatetime!=null">
+                coin_createtime,
+            </if>
+            <if test="coinUpdatetime!=null">
+                coin_updatetime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coinId!=null">
+                #{coinId,jdbcType=VARCHAR},
+            </if>
+            <if test="coinOwner!=null">
+                #{coinOwner,jdbcType=BIGINT},
+            </if>
+            <if test="coinNum!=null">
+                #{coinNum,jdbcType=DOUBLE},
+            </if>
+            <if test="coinCreatetime!=null">
+                #{coinCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="coinUpdatetime!=null">
+                #{coinUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.kang.entity.Coin">
+        update ttc_coin
+            set coin_owner = #{coinOwner,jdbcType=BIGINT},
+                coin_num = #{coinNum,jdbcType=DOUBLE},
+                coin_createtime = #{coinCreatetime,jdbcType=TIMESTAMP},
+                coin_updatetime= #{coinUpdatetime,jdbcType=TIMESTAMP}
+        where coin_id = #{coinId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByOwner" resultMap="BaseResultMap" parameterType="long">
+        select
+            <include refid="Base_Column_List"/>
+        from ttc_coin
+        where coin_owner = #{userId,jdbcType=BIGINT}
+    </select>
 </mapper>

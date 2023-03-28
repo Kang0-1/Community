@@ -15,6 +15,17 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    /**
+     * 通过 user 的 username||email||id 查找 User
+     * @description Mapper
+     * @param user user
+     * @return User
+     */
+    User selectUserByParam(User user);
+
+    void updateByPrimaryKey(User user);
+
+    int insertSelective(User user);
 }
 
 
