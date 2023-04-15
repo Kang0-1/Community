@@ -1,5 +1,6 @@
 package com.kang.mapper;
 
+import com.kang.domain.Result;
 import com.kang.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,6 +16,7 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
+    List<Category> selectByCode(int code);
 }
 
 

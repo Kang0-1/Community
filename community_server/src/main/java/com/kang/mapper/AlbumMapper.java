@@ -1,5 +1,6 @@
 package com.kang.mapper;
 
+import com.kang.domain.Result;
 import com.kang.entity.Album;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,6 +16,9 @@ import java.util.List;
 @Mapper
 public interface AlbumMapper {
 
+    List<Album> selectByParam(Album album);
+
+    int insertSelective(Album album);
 }
 
 

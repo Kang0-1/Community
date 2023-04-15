@@ -44,4 +44,19 @@
             </if>
         </trim>
     </insert>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.Favorite">
+        select
+        <include refid="Base_Column_List" />
+        from ttc_favorite
+        <where>
+            <if test="favoriteOwner != null">
+                and favorite_owner = #{favoriteOwner}
+            </if>
+            <if test="favoriteName != null and favoriteName != ''">
+                and favorite_name = #{favoriteName}
+            </if>
+        </where>
+    </select>
+
 </mapper>

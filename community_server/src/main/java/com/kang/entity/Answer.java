@@ -47,6 +47,11 @@ public class Answer implements Serializable {
     
     /**回答者头像*/
     private String authorAvatar;
+
+    /**
+     * 其他参数
+     */
+    private String acceptId;
     
 
 

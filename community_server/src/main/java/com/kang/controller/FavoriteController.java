@@ -16,6 +16,28 @@ import javax.annotation.Resource;
 @RequestMapping("favorite")
 public class FavoriteController {
 
+    /**
+     * Favorite 收藏夹 -(名词)
+      */
+
+    @Resource
+    private FavoriteService favoriteService;
+
+    @GetMapping("/list/{uid}")
+    public Result list(@PathVariable Long uid){
+        return Result.success(favoriteService.getList(uid));
+    }
+
+    @PostMapping("/save")
+    public Result save(@RequestBody Favorite favorite){
+        int i = favoriteService.saveFavorite(favorite);
+        if (i>0){
+            return Result.success();
+        }else {
+            return Result.error();
+        }
+    }
+
 }
 
 

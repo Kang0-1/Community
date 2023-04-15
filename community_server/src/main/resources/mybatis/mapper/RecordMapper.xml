@@ -18,7 +18,7 @@
 
     <insert id="insertSelective" parameterType="com.kang.entity.Record">
         insert into ttc_record
-        <trim prefix="(" suffix="(" suffixOverrides=",">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="recordId!=null">
                 record_id,
             </if>
@@ -42,27 +42,42 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="recordId!=null">
-                #{record_id,jdbcType=VARCHAR},
+            <if test="recordId != null">
+                #{recordId,jdbcType=VARCHAR},
             </if>
-            <if test="recordDescribe!=null">
-                #{record_describe,jdbcType=VARCHAR},
+            <if test="recordDescribe != null">
+                #{recordDescribe,jdbcType=VARCHAR},
             </if>
-            <if test="authorId!=null">
-                #{author_id,jdbcType=BIGINT},
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
             </if>
-            <if test="coinChange!=null">
-                #{coin_change,jdbcType=VARCHAR},
+            <if test="coinChange != null">
+                #{coinChange,jdbcType=VARCHAR},
             </if>
-            <if test="recordCreatetime!=null">
-                #{record_createtime,jdbcType=TIMESTAMP},
+            <if test="recordCreatetime != null">
+                #{recordCreatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="worksType!=null">
-                #{works_type,jdbcType=INTEGER},
+            <if test="worksType != null">
+                #{worksType,jdbcType=INTEGER},
             </if>
-            <if test="worksId!=null">
-                #{works_id,jdbcType=VARCHAR},
+            <if test="worksId != null">
+                #{worksId,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_record
+        <where>
+            <if test="authorId!=null">
+                and author_id=#{authorId}
+            </if>
+            <if test="worksId!=null and worksId!=''">
+                and works_id=#{worksId}
+            </if>
+        </where>
+        order by record_createtime desc
+    </select>
 </mapper>

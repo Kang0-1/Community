@@ -2,4 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.AnswerMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Answer">
+        <id column="answer_id" jdbcType="VARCHAR" property="answerId" />
+        <result column="answer_content" jdbcType="VARCHAR" property="answerContent" />
+        <result column="answer_createtime" jdbcType="TIMESTAMP" property="answerCreatetime" />
+        <result column="author_id" jdbcType="BIGINT" property="authorId" />
+        <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+        <result column="question_id" jdbcType="VARCHAR" property="questionId" />
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+        <result column="author_avatar" jdbcType="VARCHAR" property="authorAvatar" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        answer_id, answer_content, answer_createtime, author_id, author_name, question_id,
+    parent_id, author_avatar
+    </sql>
+
+    <insert id="insert" parameterType="com.kang.entity.Answer">
+        insert into ttc_answer (answer_id, answer_content, answer_createtime,
+                                author_id, author_name, question_id,
+                                parent_id, author_avatar)
+        values (#{answerId,jdbcType=VARCHAR}, #{answerContent,jdbcType=VARCHAR}, #{answerCreatetime,jdbcType=TIMESTAMP},
+                #{authorId,jdbcType=BIGINT}, #{authorName,jdbcType=VARCHAR}, #{questionId,jdbcType=VARCHAR},
+                #{parentId,jdbcType=VARCHAR}, #{authorAvatar,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="selectByParam" parameterType="com.kang.entity.Answer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ttc_answer
+        <where>
+            <if test="questionId != null and questionId != ''">
+                and question_id = #{questionId}
+            </if>
+        </where>
+        order by answer_createtime desc
+    </select>
+
 </mapper>

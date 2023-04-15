@@ -3,10 +3,10 @@ package com.kang.service.impl;
 import com.kang.entity.Record;
 import com.kang.mapper.RecordMapper;
 import com.kang.service.RecordService;
-import com.kang.domain.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Record)表服务实现类
@@ -18,5 +18,10 @@ import javax.annotation.Resource;
 public class RecordServiceImpl implements RecordService {
         @Resource
         private RecordMapper recordMapper;
+
+        @Override
+        public List<Record> getRecordList(Record record) {
+                return recordMapper.selectByParam(record);
+        }
 }
 

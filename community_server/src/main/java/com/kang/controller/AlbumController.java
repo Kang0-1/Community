@@ -17,6 +17,14 @@ import javax.annotation.Resource;
 @RequestMapping("album")
 public class AlbumController {
 
+    @Resource
+    private AlbumService albumService;
+
+    @PostMapping("/list")
+    public Result queryAlbum(@RequestBody Album album){
+        return Result.success(albumService.queryAlbumByParam(album));
+    }
+
 }
 
 

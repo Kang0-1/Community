@@ -15,6 +15,13 @@ import java.util.List;
 @Mapper
 public interface HistoryMapper {
 
+    int deleteByPrimaryKeys(List<String> idList);
+
+    List<History> selectByParam(History history);
+
+    int updateByPrimaryKey(History history);
+
+    int insertSelective(History history);
 }
 
 

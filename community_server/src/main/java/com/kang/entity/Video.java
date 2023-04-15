@@ -2,12 +2,14 @@ package com.kang.entity;
 
 import java.util.Date;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kang.entity.vo.VideoListVo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
-
+import java.util.List;
 
 
 /**
@@ -45,7 +47,7 @@ public class Video implements Serializable {
     private String videoSummary;
     
     /**观看数*/
-    private Long videoView;
+    private long videoView;
     
     /**创建时间*/
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -71,7 +73,7 @@ public class Video implements Serializable {
     private String associatedResource;
     
     /**作者id*/
-    private Long authorId;
+    private long authorId;
     
     /**评论区开关（如果是付费的，则评论区不可关）*/
     private Integer commentSwitch;
@@ -81,6 +83,21 @@ public class Video implements Serializable {
     
     /**作者头像*/
     private String authorAvatar;
+
+    /**
+       * 其他属性
+     */
+    private List<VideoListVo> videoList;
+
+    private String videoCategoryName;
+
+    public void setVideoCategoryName(String videoCategoryName) {
+        if (StrUtil.isEmpty(videoCategoryName)) {
+            this.videoCategoryName = "其他";
+        } else {
+            this.videoCategoryName = videoCategoryName;
+        }
+    }
 
 }
 

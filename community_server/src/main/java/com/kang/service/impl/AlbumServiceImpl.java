@@ -8,6 +8,7 @@ import com.kang.domain.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 1(Album)表服务实现类
@@ -20,5 +21,9 @@ public class AlbumServiceImpl implements AlbumService {
         @Resource
         private AlbumMapper albumMapper;
 
+        @Override
+        public List<Album> queryAlbumByParam(Album album) {
+                return albumMapper.selectByParam(album);
+        }
 }
 

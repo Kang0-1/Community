@@ -7,6 +7,7 @@ import com.kang.domain.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Category)表服务实现类
@@ -19,5 +20,9 @@ public class CategoryServiceImpl implements CategoryService {
         @Resource
         private CategoryMapper categoryMapper;
 
+        @Override
+        public List<Category> queryCategoryByCode(int code) {
+                return categoryMapper.selectByCode(code);
+        }
 }
 

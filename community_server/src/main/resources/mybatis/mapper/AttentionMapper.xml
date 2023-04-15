@@ -2,4 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.AttentionMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Attention">
+        <id column="attention_id" jdbcType="VARCHAR" property="attentionId"/>
+        <result column="idol_id" jdbcType="BIGINT" property="idolId"/>
+        <result column="fans_id" jdbcType="BIGINT" property="fansId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        attention_id, idol_id, fans_id
+    </sql>
+
+    <insert id="insert" parameterType="com.kang.entity.Attention">
+        insert into ttc_attention (attention_id, idol_id, fans_id)
+            values (#{attentionId,jdbcType=VARCHAR},#{idolId,jdbcType=BIGINT},#{fansId,jdbcType=BIGINT})
+    </insert>
+
+    <delete id="deleteByParam">
+        delete from ttc_attention
+        <where>
+            <if test="idolId!=null">
+                and idol_id=#{idolId}
+            </if>
+            <if test="fansId!=null">
+                and fans_id=#{fansId}
+            </if>
+        </where>
+    </delete>
+
+    <select id="selectByJudge" resultType="int">
+        select count(1)
+        from ttc_attention
+        where idol_id=#{idolId} and fans_id=#{fansId}
+    </select>
+
+<!--    查出id对应的关注列表的用户信息（传入fansId） || id对应的粉丝列表的用户信息(传入idolId)-->
+    <select id="selectByParam" resultType="com.kang.entity.Attention">
+        select
+        <include refid="Base_Column_List"/>
+        <if test="(idolId != null and fansId == null) || (idolId == null and fansId != null)">
+            ,nick_name as nickname,user_avatar as avatar,user_sign as sign
+        </if>
+        from ttc_attention att
+        <if test="idolId !=null and fansId ==null">
+            left join ttc_user u
+            on att.fans_id=u.user_id
+        </if>
+        <if test="fansId !=null and idolId ==null">
+            left join ttc_user u
+            on att.idol_id=u.user_id
+        </if>
+        <where>
+            <if test="idolId!=null">
+                idol_id=#{idolId}
+            </if>
+            <if test="fansId!=null">
+                fans_id=#{fansId}
+            </if>
+        </where>
+    </select>
 </mapper>

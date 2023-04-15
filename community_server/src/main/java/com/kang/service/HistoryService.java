@@ -3,6 +3,8 @@ package com.kang.service;
 import com.kang.entity.History;
 import com.kang.domain.Result;
 
+import java.util.List;
+
 /**
  * (History)表服务接口
  *
@@ -11,5 +13,8 @@ import com.kang.domain.Result;
  */
 public interface HistoryService {
 
+    List<History> getHistoryList(Long uid);
+
+    int delHistory(List<String> idList);
 }
 

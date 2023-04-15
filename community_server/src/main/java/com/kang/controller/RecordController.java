@@ -17,6 +17,27 @@ import javax.annotation.Resource;
 @RequestMapping("record")
 public class RecordController {
 
+    @Resource
+    private RecordService recordService;
+
+    @PostMapping("/judge")
+    public Result judge(@RequestBody Record record){
+        int i = recordService.getRecordList(record).size();
+        if(i>0){
+            return Result.success();
+        }else {
+            return Result.error();
+        }
+    }
+
+    @GetMapping("/list/{uid}")
+    public Result list(@PathVariable Long uid){
+        Record record=new Record();
+        record.setAuthorId(uid);
+        return Result.success(recordService.getRecordList(record));
+    }
+
+
 }
 
 

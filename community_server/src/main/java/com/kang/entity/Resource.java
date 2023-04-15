@@ -2,6 +2,7 @@ package com.kang.entity;
 
 import java.util.Date;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,6 +64,16 @@ public class Resource implements Serializable {
     
     /**作者头像*/
     private String authorAvatar;
+
+    private String resourceTypeName;
+
+    public void setResourceTypeName(String resourceTypeName) {
+        if (StrUtil.isEmpty(resourceTypeName)) {
+            this.resourceTypeName = "其他";
+        } else {
+            this.resourceTypeName = resourceTypeName;
+        }
+    }
     
 
 

@@ -15,6 +15,13 @@ import java.util.List;
 @Mapper
 public interface AttentionMapper {
 
+    int selectByJudge (Attention attention);
+
+    List<Attention> selectByParam(Attention attention);
+
+    int insert(Attention attention);
+
+    int deleteByParam(Attention attention);
 }
 
 

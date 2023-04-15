@@ -59,7 +59,8 @@ public class MyJwtAuthenticationFilter extends BasicAuthenticationFilter {
         String userRole = user.getUserRole();
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(userRole));
+                new UsernamePasswordAuthenticationToken(username, null,
+                        AuthorityUtils.commaSeparatedStringToAuthorityList(userRole));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request,response);
     }

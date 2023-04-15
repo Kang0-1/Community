@@ -2,4 +2,214 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.ResourceMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Resource">
+        <id column="resource_id" jdbcType="VARCHAR" property="resourceId" />
+        <result column="author_id" jdbcType="BIGINT" property="authorId" />
+        <result column="resource_title" jdbcType="VARCHAR" property="resourceTitle" />
+        <result column="resource_summary" jdbcType="VARCHAR" property="resourceSummary" />
+        <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
+        <result column="resource_coin" jdbcType="INTEGER" property="resourceCoin" />
+        <result column="resource_type" jdbcType="INTEGER" property="resourceType" />
+        <result column="resource_createtime" jdbcType="TIMESTAMP" property="resourceCreatetime" />
+        <result column="resource_updatetime" jdbcType="TIMESTAMP" property="resourceUpdatetime" />
+        <result column="resource_size" jdbcType="VARCHAR" property="resourceSize" />
+        <result column="resource_state" jdbcType="INTEGER" property="resourceState" />
+        <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+        <result column="author_avatar" jdbcType="VARCHAR" property="authorAvatar" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        resource_id, author_id, resource_title, resource_summary, resource_url, resource_coin,
+    resource_type, resource_createtime, resource_updatetime, resource_size, resource_state,
+    author_name, author_avatar
+    </sql>
+
+    <delete id="deleteByPrimaryKey" parameterType="string">
+        delete from ttc_resource
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectNum" parameterType="long" resultType="com.kang.entity.vo.WorkStateNum">
+        select
+            (select count(1) from ttc_resource where author_id = #{uid} and resource_state = 0) as zero,
+            (select count(1) from ttc_resource where author_id = #{uid} and resource_state = 1) as one,
+            (select count(1) from ttc_resource where author_id = #{uid} and resource_state = 2) as two,
+            (select count(1) from ttc_resource where author_id = #{uid} and resource_state = 3) as three
+    </select>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.Resource">
+        insert into ttc_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resourceId != null">
+                resource_id,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="resourceTitle != null">
+                resource_title,
+            </if>
+            <if test="resourceSummary != null">
+                resource_summary,
+            </if>
+            <if test="resourceUrl != null">
+                resource_url,
+            </if>
+            <if test="resourceCoin != null">
+                resource_coin,
+            </if>
+            <if test="resourceType != null">
+                resource_type,
+            </if>
+            <if test="resourceCreatetime != null">
+                resource_createtime,
+            </if>
+            <if test="resourceUpdatetime != null">
+                resource_updatetime,
+            </if>
+            <if test="resourceSize != null">
+                resource_size,
+            </if>
+            <if test="resourceState != null">
+                resource_state,
+            </if>
+            <if test="authorName != null">
+                author_name,
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="resourceId != null">
+                #{resourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="resourceTitle != null">
+                #{resourceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceSummary != null">
+                #{resourceSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceUrl != null">
+                #{resourceUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceCoin != null">
+                #{resourceCoin,jdbcType=INTEGER},
+            </if>
+            <if test="resourceType != null">
+                #{resourceType,jdbcType=INTEGER},
+            </if>
+            <if test="resourceCreatetime != null">
+                #{resourceCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceUpdatetime != null">
+                #{resourceUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceSize != null">
+                #{resourceSize,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceState != null">
+                #{resourceState,jdbcType=INTEGER},
+            </if>
+            <if test="authorName != null">
+                #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="authorAvatar != null">
+                #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Resource">
+        update ttc_resource
+        <set>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="resourceTitle != null">
+                resource_title = #{resourceTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceSummary != null">
+                resource_summary = #{resourceSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceUrl != null">
+                resource_url = #{resourceUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceCoin != null">
+                resource_coin = #{resourceCoin,jdbcType=INTEGER},
+            </if>
+            <if test="resourceType != null">
+                resource_type = #{resourceType,jdbcType=INTEGER},
+            </if>
+            <if test="resourceCreatetime != null">
+                resource_createtime = #{resourceCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceUpdatetime != null">
+                resource_updatetime = #{resourceUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceSize != null">
+                resource_size = #{resourceSize,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceState != null">
+                resource_state = #{resourceState,jdbcType=INTEGER},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar = #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.vo.QueryResourceVo">
+        select
+        <include refid="Base_Column_List" />,category_name as resourceTypeName
+        from ttc_resource re
+        left join ttc_category ca
+        on re.resource_type = ca.category_code
+        <where>
+            <if test="authorId != null and authorId != 0">
+                and re.author_id = #{authorId}
+            </if>
+            <if test="resourceState != null">
+                and re.resource_state = #{resourceState}
+            </if>
+            <if test="categoryCode != null  and categoryCode != -1">
+                and re.resource_type = #{categoryCode}
+            </if>
+            <if test="order == 'free'.toString()">
+                and  re.resource_coin = 0
+            </if>
+            <if test="searchContent != null and searchContent!= ''">
+                and (re.resource_title like concat('%',#{searchContent},'%')
+                or re.resource_summary like concat('%',#{searchContent},'%'))
+            </if>
+        </where>
+        <if test="order == 'new'.toString()">
+            order by resource_updatetime desc;
+        </if>
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap" parameterType="list">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_resource
+        where resource_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List" />
+        from ttc_resource
+        where resource_id = #{resourceId,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

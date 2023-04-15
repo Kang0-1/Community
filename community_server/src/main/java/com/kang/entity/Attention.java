@@ -28,7 +28,17 @@ public class Attention implements Serializable {
     
     /**粉丝（关注者）*/
     private Long fansId;
-    
+
+
+    /**
+     * 其他数据
+     */
+    private String avatar;
+
+    private String nickname;
+
+    private String sign;
+
 
 
 }

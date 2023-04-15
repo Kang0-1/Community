@@ -43,7 +43,9 @@ public class Album implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date albumUpdatetime;
     
-    /**合集里放的作品种类*/
+    /**合集里放的作品种类
+     *  0:视频  1:文章
+     * */
     private Integer albumType;
     
 

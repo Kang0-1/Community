@@ -32,13 +32,29 @@ public class History implements Serializable {
     /**创建时间*/
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date historyCreatetime;
-    
-    /**作品类型*/
+
+    /**
+     * 作品类型(0:视频，1：文章，2：问答)
+     */
     private Integer worksType;
     
     /**作品id*/
     private String worksId;
-    
+
+    /**
+     * 其他参数
+     */
+    private String firstImg;
+
+    private String worksTitle;
+
+    private String worksAuthor;
+
+    private String worksAvatar;
+
+    private String worksCategory;
+
+    private Integer worksCoin;
 
 
 }

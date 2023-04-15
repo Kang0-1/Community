@@ -2,6 +2,7 @@ package com.kang.entity;
 
 import java.util.Date;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,6 +64,21 @@ public class Question implements Serializable {
     
     /**头像*/
     private String authorAvatar;
+
+    /**
+     * 其他数据
+     */
+    private String qaCategoryName;
+
+
+
+    public void setQaCategoryName(String qaCategoryName) {
+        if (StrUtil.isEmpty(qaCategoryName)) {
+            this.qaCategoryName = "其他";
+        } else {
+            this.qaCategoryName = qaCategoryName;
+        }
+    }
     
 
 

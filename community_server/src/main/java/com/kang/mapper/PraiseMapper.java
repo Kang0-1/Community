@@ -15,6 +15,11 @@ import java.util.List;
 @Mapper
 public interface PraiseMapper {
 
+    int selectByParam(Praise praise);
+
+    int deleteByParam(Praise praise);
+
+    int insert(Praise praise);
 }
 
 

@@ -2,4 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.PraiseMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Praise">
+        <result column="praise_id" jdbcType="BIGINT" property="praiseId"/>
+        <result column="works_id" jdbcType="VARCHAR" property="worksId"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        praise_id, works_id, author_id
+    </sql>
+
+
+    <insert id="insert" parameterType="com.kang.entity.Praise">
+        insert into ttc_praise (praise_id, works_id, author_id)
+        values (#{praiseId,jdbcType=BIGINT}, #{worksId,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT})
+    </insert>
+
+    <delete id="deleteByParam" parameterType="long">
+        delete from ttc_praise
+        <where>
+            <if test="praiseId!=null">
+                and praise_id=#{praiseId}
+            </if>
+            <if test="worksId!=null and worksId!=''">
+                and works_id=#{worksId}
+            </if>
+        </where>
+    </delete>
+
+    <select id="selectByParam" resultType="java.lang.Integer" parameterType="com.kang.entity.Praise">
+        select count(1)
+        from ttc_praise
+        <where>
+            <if test="praiseId!=null">
+                and praise_id=#{praiseId}
+            </if>
+            <if test="worksId!=null and worksId!=''">
+                and works_id=#{worksId}
+            </if>
+        </where>
+    </select>
 </mapper>

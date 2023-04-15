@@ -15,6 +15,15 @@ import java.util.List;
 @Mapper
 public interface CollectMapper {
 
+    List<Collect> selectByParam(Collect collect);
+
+    int deleteByParam(Collect collect);
+
+    int insertSelective(Collect collect);
+
+    List<String> selectWorksByParam(String fid);
+
+    int selectNum(String favoriteId);
 }
 
 

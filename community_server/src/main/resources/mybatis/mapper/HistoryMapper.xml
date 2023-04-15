@@ -2,4 +2,85 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.HistoryMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.History">
+        <id column="history_id" jdbcType="VARCHAR" property="historyId"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+        <result column="history_createtime" jdbcType="TIMESTAMP" property="historyCreatetime"/>
+        <result column="works_type" jdbcType="INTEGER" property="worksType"/>
+        <result column="works_id" jdbcType="VARCHAR" property="worksId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        history_id, author_id, history_createtime, works_type, works_id
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.History">
+        insert into ttc_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="historyId != null">
+                history_id,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="historyCreatetime != null">
+                history_createtime,
+            </if>
+            <if test="worksType != null">
+                works_type,
+            </if>
+            <if test="worksId != null">
+                works_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="historyId != null">
+                #{historyId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="historyCreatetime != null">
+                #{historyCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="worksType != null">
+                #{worksType,jdbcType=INTEGER},
+            </if>
+            <if test="worksId != null">
+                #{worksId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.kang.entity.History">
+        update ttc_history
+        set author_id          = #{authorId,jdbcType=BIGINT},
+            history_createtime = #{historyCreatetime,jdbcType=TIMESTAMP},
+            works_type         = #{worksType,jdbcType=INTEGER},
+            works_id           = #{worksId,jdbcType=VARCHAR}
+        where history_id = #{historyId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKeys" parameterType="list">
+        delete from ttc_history
+        where history_id in 
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.History">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_history
+        <where>
+            <if test="worksId!=null and worksId!=''">
+                and works_id=#{worksId}
+            </if>
+            <if test="authorId!=null">
+                and author_id=#{authorId}
+            </if>
+        </where>
+        order by history_createtime desc
+    </select>
 </mapper>

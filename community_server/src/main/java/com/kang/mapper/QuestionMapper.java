@@ -1,6 +1,8 @@
 package com.kang.mapper;
 
 import com.kang.entity.Question;
+import com.kang.entity.vo.QueryQuestionVo;
+import com.kang.entity.vo.WorkStateNum;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +17,17 @@ import java.util.List;
 @Mapper
 public interface QuestionMapper {
 
+    Question selectByPrimaryKey(String questionId);
+
+    List<Question> selectByParam(QueryQuestionVo queryQuestionVo);
+
+    int updateByPrimaryKeySelective(Question question);
+
+    int insertSelective(Question question);
+
+    WorkStateNum selectNum(Long uid);
+
+    int deleteByPrimaryKey(String qid);
 }
 
 

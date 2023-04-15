@@ -11,7 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.filter.CorsFilter;
+
 import javax.annotation.Resource;
 
 /**
@@ -24,7 +26,7 @@ import javax.annotation.Resource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -47,46 +49,48 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MyAccessDeniedHandler accessDeniedHandler;
 
     @Resource
-    private CorsFilter corsFilter;
+    private ExceptionHandlerFilter exceptionHandlerFilter;
 
     /**
      * token认证过滤器
      */
     @Bean
     MyJwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        MyJwtAuthenticationFilter jwtAuthenticationFilter=new MyJwtAuthenticationFilter(authenticationManager());
+        MyJwtAuthenticationFilter jwtAuthenticationFilter = new MyJwtAuthenticationFilter(authenticationManager());
         return jwtAuthenticationFilter;
     }
 
-    public static final String[] URL_WhiteList={
-            "/login","/imgCode", "/emailCode","/admin/login", "/resource/**","/category/list/**",
+    private static final String[] URL_WHITELIST = {
+            "/login", "/imgCode", "/emailCode", "/admin/login", "/resource/**", "/category/list/**",
             "/video/list/**", "/article/list/**", "/question/list", "/resource/list",
-            "/comment/list","/common/**"
-    } ;
+            "/comment/list", "/common/**"
+
+    };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //禁用session
 
+                // 配置拦截规则
                 .and()
-                .authorizeHttpRequests()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()                         //配置Spring Security,设置不拦截OPTIONS请求
-                .antMatchers(URL_WhiteList).permitAll()                                  //白名单可以访问
-                .antMatchers("/admin/**").hasAnyRole("admin","super") //登录管理页面 要拥有的权限
-                .anyRequest().authenticated()                                          //除上面外所以请求需要鉴权认证
+                .authorizeRequests()
+                .antMatchers(URL_WHITELIST).permitAll()
+                .antMatchers("/admin/**").hasAnyRole("admin","super")
+                .antMatchers("/super/**").hasRole("super")
+                .anyRequest().authenticated()
 
-                //异常处理器
+                // 异常处理器
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(accessDeniedHandler)
 
-                //配置自定义的过滤器
+                // 配置自定义的过滤器
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(corsFilter,jwtAuthenticationFilter().getClass());
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                //.addFilterBefore(exceptionHandlerFilter, LogoutFilter.class);   // 把异常处理的filter放到其他filter前面来全局异常处理
     }
 
 

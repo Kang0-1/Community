@@ -2,4 +2,84 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.AlbumMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Album">
+        <id column="album_id" jdbcType="VARCHAR" property="albumId" />
+        <result column="author_id" jdbcType="BIGINT" property="authorId" />
+        <result column="first_image" jdbcType="VARCHAR" property="firstImage" />
+        <result column="album_title" jdbcType="VARCHAR" property="albumTitle" />
+        <result column="album_createtime" jdbcType="TIMESTAMP" property="albumCreatetime" />
+        <result column="album_updatetime" jdbcType="TIMESTAMP" property="albumUpdatetime" />
+        <result column="album_type" jdbcType="INTEGER" property="albumType" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        album_id, author_id, first_image, album_title, album_createtime, album_updatetime,album_type
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.Album">
+        insert into ttc_album
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="albumId != null">
+                album_id,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="firstImage != null">
+                first_image,
+            </if>
+            <if test="albumTitle != null">
+                album_title,
+            </if>
+            <if test="albumCreatetime != null">
+                album_createtime,
+            </if>
+            <if test="albumUpdatetime != null">
+                album_updatetime,
+            </if>
+            <if test="albumType != null">
+                album_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="albumId != null">
+                #{albumId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="firstImage != null">
+                #{firstImage,jdbcType=VARCHAR},
+            </if>
+            <if test="albumTitle != null">
+                #{albumTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="albumCreatetime != null">
+                #{albumCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="albumUpdatetime != null">
+                #{albumUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="albumType != null">
+                #{albumType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.Album">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_album
+        <where>
+            <if test="albumId!=null">
+                and album_id=#{albumId}
+            </if>
+            <if test="authorId!=null">
+                and author_id=#{authorId}
+            </if>
+            <if test="albumType!=null">
+                and album_type=#{albumType}
+            </if>
+        </where>
+    </select>
 </mapper>

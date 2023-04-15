@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.CategoryMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Category">
+        <id column="category_id" jdbcType="VARCHAR" property="categoryId" />
+        <result column="category_code" jdbcType="INTEGER" property="categoryCode" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="category_createtime" jdbcType="TIMESTAMP" property="categoryCreatetime" />
+        <result column="workes_type" jdbcType="INTEGER" property="workesType" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        category_id, category_code, category_name, category_createtime, workes_type
+    </sql>
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_category
+        where workes_type = #{code,jdbcType=INTEGER}
+    </select>
 </mapper>

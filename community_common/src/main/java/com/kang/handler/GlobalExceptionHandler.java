@@ -23,11 +23,11 @@ public class GlobalExceptionHandler {
      * @param e
      * @return Result.error
      */
-    @ExceptionHandler(CaptchaException.class)
-    public Result handler(CaptchaException e){
-        log.error(e.getMessage());
-        return Result.error(e.getMessage());
-    }
+//    @ExceptionHandler(CaptchaException.class)
+//    public Result handler(CaptchaException e){
+//        log.error(e.getMessage());
+//        return Result.error(e.getMessage());
+//    }
 
     /**
      * @description 实体校验异常捕获
@@ -49,8 +49,8 @@ public class GlobalExceptionHandler {
      * @return Result.error
      */
     @ExceptionHandler(value = RuntimeException.class)
-    public Result runtimeExceptionHandle(RuntimeException e){
-        log.error("运行时异常,--------------{}",e.getMessage());
+    public Result handler(RuntimeException e) {
+        log.error("运行时异常：----------------{}", e.getMessage());
         return Result.error(500,e.getMessage());
     }
 

@@ -3,6 +3,8 @@ package com.kang.service;
 import com.kang.entity.Album;
 import com.kang.domain.Result;
 
+import java.util.List;
+
 /**
  * 1(Album)表服务接口
  *
@@ -11,5 +13,6 @@ import com.kang.domain.Result;
  */
 public interface AlbumService {
 
+    List<Album> queryAlbumByParam(Album album);
 }
 

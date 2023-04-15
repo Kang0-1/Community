@@ -2,4 +2,119 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.CommentMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Comment">
+        <id column="comment_id" jdbcType="VARCHAR" property="commentId" />
+        <result column="author_id" jdbcType="BIGINT" property="authorId" />
+        <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+        <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+        <result column="works_id" jdbcType="VARCHAR" property="worksId" />
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+        <result column="replier_id" jdbcType="BIGINT" property="replierId" />
+        <result column="replier_name" jdbcType="VARCHAR" property="replierName" />
+        <result column="comment_createtime" jdbcType="TIMESTAMP" property="commentCreatetime" />
+        <result column="comment_state" jdbcType="VARCHAR" property="commentState" />
+        <result column="author_avatar" jdbcType="VARCHAR" property="authorAvatar" />
+        <result column="replier_avatar" jdbcType="VARCHAR" property="replierAvatar" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        comment_id, author_id, author_name, comment_content, works_id, parent_id, replier_id,
+    replier_name, comment_createtime, comment_state, author_avatar, replier_avatar
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.Comment">
+        insert into ttc_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">
+                comment_id,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="authorName != null">
+                author_name,
+            </if>
+            <if test="commentContent != null">
+                comment_content,
+            </if>
+            <if test="worksId != null">
+                works_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="replierId != null">
+                replier_id,
+            </if>
+            <if test="replierName != null">
+                replier_name,
+            </if>
+            <if test="commentCreatetime != null">
+                comment_createtime,
+            </if>
+            <if test="commentState != null">
+                comment_state,
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar,
+            </if>
+            <if test="replierAvatar != null">
+                replier_avatar,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="commentId != null">
+                #{commentId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="authorName != null">
+                #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="commentContent != null">
+                #{commentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="worksId != null">
+                #{worksId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="replierId != null">
+                #{replierId,jdbcType=BIGINT},
+            </if>
+            <if test="replierName != null">
+                #{replierName,jdbcType=VARCHAR},
+            </if>
+            <if test="commentCreatetime != null">
+                #{commentCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentState != null">
+                #{commentState,jdbcType=VARCHAR},
+            </if>
+            <if test="authorAvatar != null">
+                #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="replierAvatar != null">
+                #{replierAvatar,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_comment
+        <where>
+            <if test="worksId!=null and worksId!=''">
+                and works_id=#{worksId}
+            </if>
+<!--        <if test="commentState!=null and commentState!=''">-->
+<!--            and comment_state=#{commentState}-->
+<!--        </if>-->
+        </where>
+        order by comment_createtime desc
+    </select>
+
 </mapper>

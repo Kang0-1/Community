@@ -1,7 +1,8 @@
 package com.kang.service;
 
 import com.kang.entity.Comment;
-import com.kang.domain.Result;
+import com.kang.entity.vo.CommentVo;
+import java.util.List;
 
 /**
  * (Comment)表服务接口
@@ -11,5 +12,8 @@ import com.kang.domain.Result;
  */
 public interface CommentService {
 
+    List<CommentVo> getCommentsByParam(Comment comment);
+
+    int saveComment(Comment comment);
 }
 

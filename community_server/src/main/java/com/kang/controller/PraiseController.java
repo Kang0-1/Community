@@ -17,6 +17,34 @@ import javax.annotation.Resource;
 @RequestMapping("praise")
 public class PraiseController {
 
+    @Resource
+    private PraiseService praiseService;
+
+    @PostMapping("/num")
+    public Result num(@RequestBody Praise praise){
+        return Result.success(praiseService.getPraiseNum(praise));
+    }
+
+    @PostMapping("/del")
+    public Result del(@RequestBody Praise praise){
+        int i=praiseService.delPraise(praise);
+        if(i==1){
+            return Result.success("点赞已取消");
+        }else {
+            return Result.error();
+        }
+    }
+
+    @PostMapping("/save")
+    public Result save(@RequestBody Praise praise){
+        int i=praiseService.savePraise(praise);
+        if(i==1){
+            return Result.success("点赞成功!");
+        }else {
+            return Result.error("点赞失败!");
+        }
+    }
+
 }
 
 

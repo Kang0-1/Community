@@ -17,6 +17,19 @@ import javax.annotation.Resource;
 @RequestMapping("answer")
 public class AnswerController {
 
+    @Resource
+    private AnswerService answerService;
+
+    @PostMapping("/save")
+    public Result save(@RequestBody Answer answer){
+        return Result.success(answerService.saveAnswer(answer));
+    }
+
+    @PostMapping("/list")
+    public Result list(@RequestBody Answer answer){
+        return Result.success(answerService.getAnswerList(answer));
+    }
+
 }
 
 

@@ -1,7 +1,8 @@
 package com.kang.service;
 
 import com.kang.entity.Attention;
-import com.kang.domain.Result;
+
+import java.util.List;
 
 /**
  * (Attention)表服务接口
@@ -11,5 +12,12 @@ import com.kang.domain.Result;
  */
 public interface AttentionService {
 
+    int judgeAttention(Attention attention);
+
+    int saveAttention(Attention attention);
+
+    int delAttention(Attention attention);
+
+    List<Attention> getAttentionList(int type, Long id);
 }
 

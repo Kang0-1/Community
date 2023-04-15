@@ -2,4 +2,214 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.QuestionMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Question">
+        <id column="qa_id" jdbcType="VARCHAR" property="qaId"/>
+        <result column="qa_title" jdbcType="VARCHAR" property="qaTitle"/>
+        <result column="qa_content" jdbcType="VARCHAR" property="qaContent"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+        <result column="qa_summary" jdbcType="VARCHAR" property="qaSummary"/>
+        <result column="qa_reward" jdbcType="INTEGER" property="qaReward"/>
+        <result column="qa_createtime" jdbcType="TIMESTAMP" property="qaCreatetime"/>
+        <result column="qa_updatetime" jdbcType="TIMESTAMP" property="qaUpdatetime"/>
+        <result column="qa_category" jdbcType="INTEGER" property="qaCategory"/>
+        <result column="accept_id" jdbcType="VARCHAR" property="acceptId"/>
+        <result column="author_name" jdbcType="VARCHAR" property="authorName"/>
+        <result column="qa_state" jdbcType="INTEGER" property="qaState"/>
+        <result column="author_avatar" jdbcType="VARCHAR" property="authorAvatar"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        qa_id
+        , qa_title, qa_content, author_id, qa_summary, qa_reward, qa_createtime, qa_updatetime,
+    qa_category, accept_id, author_name, qa_state, author_avatar
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.kang.entity.Question">
+        insert into ttc_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="qaId != null">
+                qa_id,
+            </if>
+            <if test="qaTitle != null">
+                qa_title,
+            </if>
+            <if test="qaContent != null">
+                qa_content,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="qaSummary != null">
+                qa_summary,
+            </if>
+            <if test="qaReward != null">
+                qa_reward,
+            </if>
+            <if test="qaCreatetime != null">
+                qa_createtime,
+            </if>
+            <if test="qaUpdatetime != null">
+                qa_updatetime,
+            </if>
+            <if test="qaCategory != null">
+                qa_category,
+            </if>
+            <if test="acceptId != null">
+                accept_id,
+            </if>
+            <if test="authorName != null">
+                author_name,
+            </if>
+            <if test="qaState != null">
+                qa_state,
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="qaId != null">
+                #{qaId,jdbcType=VARCHAR},
+            </if>
+            <if test="qaTitle != null">
+                #{qaTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="qaContent != null">
+                #{qaContent,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="qaSummary != null">
+                #{qaSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="qaReward != null">
+                #{qaReward,jdbcType=INTEGER},
+            </if>
+            <if test="qaCreatetime != null">
+                #{qaCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qaUpdatetime != null">
+                #{qaUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qaCategory != null">
+                #{qaCategory,jdbcType=INTEGER},
+            </if>
+            <if test="acceptId != null">
+                #{acceptId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorName != null">
+                #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="qaState != null">
+                #{qaState,jdbcType=INTEGER},
+            </if>
+            <if test="authorAvatar != null">
+                #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Question">
+        update ttc_question
+        <set>
+            <if test="qaTitle != null">
+                qa_title = #{qaTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="qaContent != null">
+                qa_content = #{qaContent,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="qaSummary != null">
+                qa_summary = #{qaSummary,jdbcType=VARCHAR},
+            </if>
+            <if test="qaReward != null">
+                qa_reward = #{qaReward,jdbcType=INTEGER},
+            </if>
+            <if test="qaCreatetime != null">
+                qa_createtime = #{qaCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qaUpdatetime != null">
+                qa_updatetime = #{qaUpdatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qaCategory != null">
+                qa_category = #{qaCategory,jdbcType=INTEGER},
+            </if>
+            <if test="acceptId != null">
+                accept_id = #{acceptId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="qaState != null">
+                qa_state = #{qaState,jdbcType=INTEGER},
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar = #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where qa_id = #{qaId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="string">
+        delete
+        from ttc_question
+        where qa_id = #{qaId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>,category_name as qaCategoryName
+        from ttc_question qu
+        left join ttc_category ca
+        on qu.qa_category=ca.category_code
+        where qa_id=#{questionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.vo.QueryQuestionVo">
+        select
+        <include refid="Base_Column_List"/>,category_name as qaCategoryName
+        from ttc_question qu
+        left join ttc_category ca
+        on qu.qa_category = ca.category_code
+        <where>
+            <if test="authorId != null">
+                and qu.author_id = #{authorId}
+            </if>
+            <if test="qaState != null">
+                and qu.qa_state = #{qaState}
+            </if>
+            <if test="categoryCode != null  and categoryCode != -1">
+                and qu.qa_category = #{categoryCode}
+            </if>
+            <if test="selectState == 1">
+                and qu.accept_id is not null
+            </if>
+            <if test="selectState == 0">
+                and qu.accept_id is null
+            </if>
+            <if test="searchContent != null and searchContent != ''">
+                and (qu.qa_title like concat('%',#{searchContent},'%')
+                or qu.qa_summary like concat('%',#{searchContent},'%')
+                or qu.qa_content like concat('%',#{searchContent},'%'))
+            </if>
+        </where>
+        <if test="order == 'new'.toString()">
+            order by qa_updatetime desc;
+        </if>
+        <if test="order == 'height'.toString()">
+            order by qa_reward desc;
+        </if>
+    </select>
+
+    <select id="selectNum" resultType="com.kang.entity.vo.WorkStateNum" parameterType="long">
+        select
+            (select count(1) from ttc_question where author_id = #{uid} and qa_state = 0) as zero,
+            (select count(1) from ttc_question where author_id = #{uid} and qa_state = 1) as one,
+            (select count(1) from ttc_question where author_id = #{uid} and qa_state = 2) as two,
+            (select count(1) from ttc_question where author_id = #{uid} and qa_state = 3) as three
+    </select>
+
 </mapper>

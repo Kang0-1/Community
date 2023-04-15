@@ -2,6 +2,7 @@ package com.kang.entity;
 
 import java.util.Date;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,6 +79,21 @@ public class Article implements Serializable {
     
     /**作者名字*/
     private String authorName;
+
+    /**
+     * 其他参数数据
+     */
+    private String albumName;
+
+    private String articleCategoryName;
+
+    public void setArticleCategoryName(String articleCategoryName) {
+        if (StrUtil.isEmpty(articleCategoryName)) {
+            this.articleCategoryName = "其他";
+        } else {
+            this.articleCategoryName = articleCategoryName;
+        }
+    }
     
 
 

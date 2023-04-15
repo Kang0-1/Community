@@ -1,6 +1,7 @@
 package com.kang.mapper;
 
 import com.kang.entity.User;
+import com.kang.entity.vo.SomeNum;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,6 +27,12 @@ public interface UserMapper {
     void updateByPrimaryKey(User user);
 
     int insertSelective(User user);
+
+    SomeNum selectSomeNumById(Long id);
+
+    User selectByPrimaryKey(Long payUid);
+
+    int updateByPrimaryKeySelective(User user);
 }
 
 

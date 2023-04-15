@@ -17,7 +17,7 @@ public interface CoinMapper {
 
     Coin selectByOwner(Long userId);
 
-    void updateByPrimaryKey(Coin coin);
+    int updateByPrimaryKey(Coin coin);
 
     void insertSelective(Coin coin);
 }

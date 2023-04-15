@@ -127,6 +127,49 @@
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
 
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.User">
+        update ttc_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                user_role = #{userRole,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatar != null">
+                user_avatar = #{userAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userSign != null">
+                user_sign = #{userSign,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginDate != null">
+                login_date = #{loginDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="payPassword != null">
+                pay_password = #{payPassword,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=BIGINT}
+    </update>
+
     <select id="selectUserByParam" resultType="com.kang.entity.User">
         select
             <include refid="Base_Column_List"/>
@@ -142,5 +185,19 @@
                 and user_id = #{userId}
             </if>
         </where>
+    </select>
+
+    <select id="selectSomeNumById" resultType="com.kang.entity.vo.SomeNum" parameterType="long">
+        select
+            (select count(1) from ttc_attention where fans_id=#{uid}) as followNum,
+            (select count(1) from ttc_attention where idol_id=#{uid}) as fansNum,
+            (select count(1) from ttc_praise where author_id=#{uid}) as praiseNum
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_user
+        where user_id=#{userId}
     </select>
 </mapper>

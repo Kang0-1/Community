@@ -2,4 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kang.mapper.InformMapper">
 
+    <resultMap id="BaseResultMap" type="com.kang.entity.Inform">
+        <id column="inform_id" jdbcType="VARCHAR" property="informId"/>
+        <result column="inform_content" jdbcType="VARCHAR" property="informContent"/>
+        <result column="inform_receiver" jdbcType="BIGINT" property="informReceiver"/>
+        <result column="inform_createtime" jdbcType="TIMESTAMP" property="informCreatetime"/>
+        <result column="work_id" jdbcType="VARCHAR" property="workId"/>
+        <result column="work_type" jdbcType="INTEGER" property="workType"/>
+        <result column="inform_state" jdbcType="INTEGER" property="informState"/>
+        <result column="inform_type" jdbcType="INTEGER" property="informType"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        inform_id
+        , inform_content, inform_receiver, inform_createtime, work_id, work_type,
+    inform_state, inform_type
+    </sql>
+
+    <update id="updateStateByIds" parameterType="list">
+        update ttc_inform
+        set inform_state=1
+        where inform_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByIds" parameterType="list">
+        delete
+        from ttc_inform
+        where inform_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.vo.QueryInformVo">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_inform
+        <where>
+            <if test="informReceiver!=null">
+                and inform_receiver=#{informReceiver}
+            </if>
+            <if test="informType!=null">
+                and inform_type=#{informType}
+            </if>
+            <if test="informState!=null">
+                and inform_state=#{informState}
+            </if>
+        </where>
+        order by inform_createtime desc
+    </select>
 </mapper>
