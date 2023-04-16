@@ -27,6 +27,34 @@
                 #{parentId,jdbcType=VARCHAR}, #{authorAvatar,jdbcType=VARCHAR})
     </insert>
 
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Answer">
+        update ttc_answer
+        <set>
+            <if test="answerContent != null">
+                answer_content = #{answerContent,jdbcType=VARCHAR},
+            </if>
+            <if test="answerCreatetime != null">
+                answer_createtime = #{answerCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="questionId != null">
+                question_id = #{questionId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar = #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where answer_id = #{answerId,jdbcType=VARCHAR}
+    </update>
+
     <select id="selectByParam" parameterType="com.kang.entity.Answer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

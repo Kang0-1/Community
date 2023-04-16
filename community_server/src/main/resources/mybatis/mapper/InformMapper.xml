@@ -18,6 +18,62 @@
     inform_state, inform_type
     </sql>
 
+    <insert id="insertSelective" parameterType="com.kang.entity.Inform">
+        insert into ttc_inform
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="informId != null">
+                inform_id,
+            </if>
+            <if test="informContent != null">
+                inform_content,
+            </if>
+            <if test="informReceiver != null">
+                inform_receiver,
+            </if>
+            <if test="informCreatetime != null">
+                inform_createtime,
+            </if>
+            <if test="workId != null">
+                work_id,
+            </if>
+            <if test="workType != null">
+                work_type,
+            </if>
+            <if test="informState != null">
+                inform_state,
+            </if>
+            <if test="informType != null">
+                inform_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="informId != null">
+                #{informId,jdbcType=VARCHAR},
+            </if>
+            <if test="informContent != null">
+                #{informContent,jdbcType=VARCHAR},
+            </if>
+            <if test="informReceiver != null">
+                #{informReceiver,jdbcType=BIGINT},
+            </if>
+            <if test="informCreatetime != null">
+                #{informCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="workId != null">
+                #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="workType != null">
+                #{workType,jdbcType=INTEGER},
+            </if>
+            <if test="informState != null">
+                #{informState,jdbcType=INTEGER},
+            </if>
+            <if test="informType != null">
+                #{informType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
     <update id="updateStateByIds" parameterType="list">
         update ttc_inform
         set inform_state=1

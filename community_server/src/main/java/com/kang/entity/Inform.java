@@ -47,6 +47,15 @@ public class Inform implements Serializable {
     
     /**类型：系统通知、动态通知*/
     private Integer informType;
+
+    /**
+     * 其他参数
+     */
+    private String authorName;
+
+    private String workName;
+
+    private int applyState;
     
 
 

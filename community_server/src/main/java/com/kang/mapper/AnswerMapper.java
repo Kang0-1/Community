@@ -19,6 +19,8 @@ public interface AnswerMapper {
     int insert(Answer answer);
 
     List<Answer> selectByParam(Answer answer);
+
+    int updateByPrimaryKeySelective(Answer answer);
 }
 
 

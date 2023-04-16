@@ -17,6 +17,14 @@ import java.util.List;
 public interface CategoryMapper {
 
     List<Category> selectByCode(int code);
+
+    List<Category> getCategoryList();
+
+    int updateByPrimaryKeySelective(Category category);
+
+    int insert(Category category);
+
+    int deleteByPrimaryKey(String cid);
 }
 
 

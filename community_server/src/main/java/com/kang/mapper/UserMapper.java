@@ -33,6 +33,10 @@ public interface UserMapper {
     User selectByPrimaryKey(Long payUid);
 
     int updateByPrimaryKeySelective(User user);
+
+    List<User> selectUserList();
+
+    int deleteByPrimaryKey(Long uid);
 }
 
 

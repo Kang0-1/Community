@@ -21,6 +21,8 @@ public interface InformMapper {
     int updateStateByIds(List<String> ids);
 
     int deleteByIds(List<String> ids);
+
+    int insertSelective(Inform inform);
 }
 
 

@@ -102,6 +102,46 @@
         </trim>
     </insert>
 
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Comment">
+        update ttc_comment
+        <set>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="commentContent != null">
+                comment_content = #{commentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="worksId != null">
+                works_id = #{worksId,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="replierId != null">
+                replier_id = #{replierId,jdbcType=BIGINT},
+            </if>
+            <if test="replierName != null">
+                replier_name = #{replierName,jdbcType=VARCHAR},
+            </if>
+            <if test="commentCreatetime != null">
+                comment_createtime = #{commentCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentState != null">
+                comment_state = #{commentState,jdbcType=VARCHAR},
+            </if>
+            <if test="authorAvatar != null">
+                author_avatar = #{authorAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="replierAvatar != null">
+                replier_avatar = #{replierAvatar,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where comment_id = #{commentId,jdbcType=VARCHAR}
+    </update>
+
     <select id="selectByParam" resultMap="BaseResultMap" parameterType="string">
         select
         <include refid="Base_Column_List"/>

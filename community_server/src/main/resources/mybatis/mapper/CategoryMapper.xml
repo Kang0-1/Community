@@ -14,10 +14,47 @@
         category_id, category_code, category_name, category_createtime, workes_type
     </sql>
 
+    <insert id="insert" parameterType="com.kang.entity.Category">
+        insert into ttc_category (category_id, category_code, category_name,
+                                  category_createtime, workes_type)
+        values (#{categoryId,jdbcType=VARCHAR}, #{categoryCode,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR},
+                #{categoryCreatetime,jdbcType=TIMESTAMP}, #{workesType,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.kang.entity.Category">
+        update ttc_category
+        <set>
+            <if test="categoryCode != null">
+                category_code = #{categoryCode,jdbcType=INTEGER},
+            </if>
+            <if test="categoryName != null">
+                category_name = #{categoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryCreatetime != null">
+                category_createtime = #{categoryCreatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="workesType != null">
+                workes_type = #{workesType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where category_id = #{categoryId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="string">
+        delete from ttc_category
+        where category_id = #{categoryId,jdbcType=VARCHAR}
+    </delete>
+
     <select id="selectByCode" resultMap="BaseResultMap" parameterType="int">
         select
         <include refid="Base_Column_List"/>
         from ttc_category
         where workes_type = #{code,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCategoryList" resultType="com.kang.entity.Category">
+        select
+        <include refid="Base_Column_List"/>
+        from ttc_category
     </select>
 </mapper>

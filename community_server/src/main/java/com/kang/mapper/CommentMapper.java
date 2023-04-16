@@ -18,6 +18,8 @@ public interface CommentMapper {
     List<Comment> selectByParam(Comment comment);
 
     int insertSelective(Comment comment);
+
+    int updateByPrimaryKeySelective(Comment comment);
 }
 
 

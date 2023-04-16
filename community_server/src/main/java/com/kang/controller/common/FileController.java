@@ -1,6 +1,7 @@
 package com.kang.controller.common;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.kang.domain.Result;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +43,7 @@ public class FileController {
         String filePath="";
         //当前日期字符串:today = 2019-09-17
         String[] dateArr= DateUtil.today().split("-");
-        switch (acceptType){
+        switch (fileType){
             case ".png":
             case ".jpg":
                 filePath=uploadFilePath+"/img/";
@@ -127,6 +128,21 @@ public class FileController {
             }
         }
         return Result.error("资源加载失败!");
+    }
+
+    @GetMapping("/delete")
+    public Result delete(String url) {
+        if (url != null) {
+            String Path = uploadFilePath + url.split("resource/")[1];// 文件名
+            //设置文件路径
+            File file = new File(Path);
+            //File file = new File(realPath , fileName);
+            if (file.exists()) {
+                FileUtil.del(file);
+                return Result.success();
+            }
+        }
+        return Result.error("删除失败");
     }
 
 
