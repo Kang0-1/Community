@@ -213,6 +213,12 @@
         where video_id = #{videoId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateUserInfoByUserId" parameterType="com.kang.entity.User">
+        update ttc_video
+        set author_name=#{nickName,jdbcType=VARCHAR},author_avatar=#{userAvatar,jdbcType=VARCHAR}
+        where author_id=#{userId,jdbcType=BIGINT}
+    </update>
+
     <delete id="deleteByPrimaryKey">
         delete
         from ttc_video

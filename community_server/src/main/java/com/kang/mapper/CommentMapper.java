@@ -1,6 +1,7 @@
 package com.kang.mapper;
 
 import com.kang.entity.Comment;
+import com.kang.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,6 +21,8 @@ public interface CommentMapper {
     int insertSelective(Comment comment);
 
     int updateByPrimaryKeySelective(Comment comment);
+
+    int updateUserInfoByUserId(User user);
 }
 
 

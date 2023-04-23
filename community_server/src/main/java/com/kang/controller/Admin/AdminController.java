@@ -101,7 +101,7 @@ public class AdminController {
         return Result.success(pageInfo);
     }
 
-    @GetMapping("/admin/answer/hiddern/{aid}")
+    @GetMapping("/admin/answer/hidden/{aid}")
     public Result changeAnswer(@PathVariable String aid){
         return Result.success(adminService.changeAnswer(aid));
     }
@@ -114,7 +114,7 @@ public class AdminController {
         return Result.success(pageInfo);
     }
 
-    @GetMapping("/admin/comment/hiddern/{cid}")
+    @GetMapping("/admin/comment/hidden/{cid}")
     public Result changeComment(@PathVariable String cid){
         return Result.success(adminService.changeComment(cid));
     }

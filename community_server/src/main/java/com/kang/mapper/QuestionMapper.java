@@ -1,6 +1,7 @@
 package com.kang.mapper;
 
 import com.kang.entity.Question;
+import com.kang.entity.User;
 import com.kang.entity.vo.QueryQuestionVo;
 import com.kang.entity.vo.WorkStateNum;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,6 +29,8 @@ public interface QuestionMapper {
     WorkStateNum selectNum(Long uid);
 
     int deleteByPrimaryKey(String qid);
+
+    int updateUserInfoByUserId(User user);
 }
 
 

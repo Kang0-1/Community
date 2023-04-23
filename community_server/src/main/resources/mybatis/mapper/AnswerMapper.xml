@@ -55,6 +55,12 @@
         where answer_id = #{answerId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateUserInfoByUserId" parameterType="com.kang.entity.User">
+        update ttc_answer
+        set author_name=#{nickName,jdbcType=VARCHAR},author_avatar=#{userAvatar,jdbcType=VARCHAR}
+        where author_id=#{userId,jdbcType=BIGINT}
+    </update>
+
     <select id="selectByParam" parameterType="com.kang.entity.Answer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />

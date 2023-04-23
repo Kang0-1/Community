@@ -55,6 +55,10 @@ public class Inform implements Serializable {
 
     private String workName;
 
+    /**
+     * 审核状态
+     * 0:驳回  1:通过
+     */
     private int applyState;
     
 

@@ -18,20 +18,15 @@ import com.kang.entity.vo.LoginVo;
 import com.kang.entity.vo.PassVo;
 import com.kang.entity.vo.PayVo;
 import com.kang.entity.vo.SomeNum;
-import com.kang.mapper.CoinMapper;
-import com.kang.mapper.FavoriteMapper;
-import com.kang.mapper.RecordMapper;
-import com.kang.mapper.UserMapper;
+import com.kang.mapper.*;
 import com.kang.service.UserService;
 import com.kang.domain.Result;
 import com.kang.utils.JwtUtil;
 import com.kang.utils.MailUtil;
 import com.kang.utils.RedisUtil;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,25 +40,43 @@ import java.util.UUID;
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
-    @Resource
+    @Autowired
+    private VideoMapper videoMapper;
+
+    @Autowired
+    private ArticleMapper articleMapper;
+
+    @Autowired
+    private QuestionMapper questionMapper;
+
+    @Autowired
+    private ResourceMapper resourceMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
+    @Autowired
+    private AnswerMapper answerMapper;
+
+    @Autowired
     private CoinMapper coinMapper;
 
-    @Resource
+    @Autowired
     private FavoriteMapper favoriteMapper;
 
-    @Resource
+    @Autowired
     private RecordMapper recordMapper;
 
-    @Resource
+    @Autowired
     private RedisUtil redisUtil;
 
-    @Resource
+    @Autowired
     private JwtUtil jwtUtil;
 
-    @Resource
+    @Autowired
     private MailUtil mailUtil;
 
     @Override
@@ -195,7 +208,13 @@ public class UserServiceImpl implements UserService {
             user.setUserSign("这个家伙很懒，什么都没有留下！");
         }
         user.setUpdateTime(new Date());
-        // TODO 修改涉及到用户数据的其他表
+        // 修改涉及到用户数据的其他表
+        videoMapper.updateUserInfoByUserId(user);
+        articleMapper.updateUserInfoByUserId(user);
+        questionMapper.updateUserInfoByUserId(user);
+        resourceMapper.updateUserInfoByUserId(user);
+        answerMapper.updateUserInfoByUserId(user);
+        commentMapper.updateUserInfoByUserId(user);
         //设计表的时候偷了个懒，把用户头像、昵称存到了作品、评论里，导致用户修改的时候其他表中的用户信息改不了，算是个教训，该连表查还是得连表查
         return userMapper.updateByPrimaryKeySelective(user);
     }

@@ -1,6 +1,7 @@
 package com.kang.mapper;
 
 import com.kang.entity.Article;
+import com.kang.entity.User;
 import com.kang.entity.vo.QueryArticleVo;
 import com.kang.entity.vo.WorkStateNum;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,6 +33,8 @@ public interface ArticleMapper {
     List<Article> selectByIds(List<String> idList);
 
     WorkStateNum selectNum(Long uid);
+
+    int updateUserInfoByUserId(User user);
 }
 
 

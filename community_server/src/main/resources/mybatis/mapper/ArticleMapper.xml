@@ -231,6 +231,12 @@
         where article_id = #{articleId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateUserInfoByUserId" parameterType="com.kang.entity.User">
+        update ttc_article
+        set author_name=#{nickName,jdbcType=VARCHAR},author_avatar=#{userAvatar,jdbcType=VARCHAR}
+        where author_id=#{userId,jdbcType=BIGINT}
+    </update>
+
     <delete id="deleteByPrimaryKey" parameterType="string">
         delete
         from ttc_article

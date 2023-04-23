@@ -166,6 +166,12 @@
         where resource_id = #{resourceId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateUserInfoByUserId" parameterType="com.kang.entity.User">
+        update ttc_resource
+        set author_name=#{nickName,jdbcType=VARCHAR},author_avatar=#{userAvatar,jdbcType=VARCHAR}
+        where author_id=#{userId,jdbcType=BIGINT}
+    </update>
+
     <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.kang.entity.vo.QueryResourceVo">
         select
         <include refid="Base_Column_List" />,category_name as resourceTypeName

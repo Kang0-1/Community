@@ -14,6 +14,6 @@ public interface CommentService {
 
     List<CommentVo> getCommentsByParam(Comment comment);
 
-    int saveComment(Comment comment);
+    int saveComment(Comment comment,int type);
 }
 

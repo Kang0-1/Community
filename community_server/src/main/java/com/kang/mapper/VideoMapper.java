@@ -1,5 +1,6 @@
 package com.kang.mapper;
 
+import com.kang.entity.User;
 import com.kang.entity.Video;
 import com.kang.entity.vo.QueryVideoVo;
 import com.kang.entity.vo.WorkStateNum;
@@ -30,6 +31,8 @@ public interface VideoMapper {
     int deleteByPrimaryKey(String vid);
 
     List<Video> selectByIds(List<String> ids);
+
+    int updateUserInfoByUserId(User user);
 }
 
 

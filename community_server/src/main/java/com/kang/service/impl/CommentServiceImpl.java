@@ -1,9 +1,13 @@
 package com.kang.service.impl;
 
 import com.kang.entity.Comment;
+import com.kang.entity.Inform;
+import com.kang.entity.Video;
 import com.kang.entity.vo.CommentVo;
 import com.kang.entity.vo.SimpleUser;
 import com.kang.mapper.CommentMapper;
+import com.kang.mapper.InformMapper;
+import com.kang.mapper.VideoMapper;
 import com.kang.service.CommentService;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,12 @@ public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentMapper commentMapper;
 
+    @Resource
+    private InformMapper informMapper;
+
+    @Resource
+    private VideoMapper videoMapper;
+
     @Override
     public List<CommentVo> getCommentsByParam(Comment comment) {
         // 1.查出所有列表评论 并转换成VoList
@@ -39,10 +49,25 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int saveComment(Comment comment) {
+    public int saveComment(Comment comment,int type) {
         comment.setCommentId(UUID.randomUUID().toString());
         comment.setCommentCreatetime(new Date());
         // 后续进行 系统通知
+        if(type==1){
+            Inform inform=new Inform();
+            inform.setInformId(UUID.randomUUID().toString());
+            inform.setInformCreatetime(new Date());
+            inform.setInformReceiver(comment.getReplierId());
+            inform.setWorkId(comment.getWorksId());
+            Video video = videoMapper.selectByPrimaryKey(comment.getWorksId());
+            inform.setWorkType(null==video?1:0);
+            // 动态通知
+            inform.setInformType(1);
+            // 未读
+            inform.setInformState(0);
+            inform.setInformContent("您的评论收到回复《"+comment.getCommentContent()+"》 来自:@"+comment.getAuthorName());
+            informMapper.insertSelective(inform);
+        }
         return commentMapper.insertSelective(comment);
     }
 

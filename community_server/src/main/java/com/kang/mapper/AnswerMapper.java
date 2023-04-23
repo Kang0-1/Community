@@ -2,6 +2,7 @@ package com.kang.mapper;
 
 
 import com.kang.entity.Answer;
+import com.kang.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,6 +22,8 @@ public interface AnswerMapper {
     List<Answer> selectByParam(Answer answer);
 
     int updateByPrimaryKeySelective(Answer answer);
+
+    int updateUserInfoByUserId(User user);
 }
 
 

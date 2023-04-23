@@ -31,7 +31,7 @@ public class CommentController {
         if(type==0){
             comment.setParentId("-1");
         }
-        int i=commentService.saveComment(comment);
+        int i=commentService.saveComment(comment,type);
         if(i==1){
             return Result.success("评论成功!");
         }else {

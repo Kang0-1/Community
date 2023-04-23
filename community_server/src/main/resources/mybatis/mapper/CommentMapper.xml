@@ -142,6 +142,15 @@
         where comment_id = #{commentId,jdbcType=VARCHAR}
     </update>
 
+    <update id="updateUserInfoByUserId" parameterType="com.kang.entity.User">
+        update ttc_comment
+        set author_name=#{nickName,jdbcType=VARCHAR},author_avatar=#{userAvatar,jdbcType=VARCHAR}
+        where author_id=#{userId,jdbcType=BIGINT};
+        update ttc_comment
+        set replier_name=#{nickName,jdbcType=VARCHAR},replier_avatar=#{userAvatar,jdbcType=VARCHAR}
+        where replier_id=#{userId,jdbcType=BIGINT}
+    </update>
+
     <select id="selectByParam" resultMap="BaseResultMap" parameterType="string">
         select
         <include refid="Base_Column_List"/>
