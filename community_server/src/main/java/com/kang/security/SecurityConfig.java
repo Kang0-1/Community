@@ -48,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private MyAccessDeniedHandler accessDeniedHandler;
 
-    @Resource
-    private ExceptionHandlerFilter exceptionHandlerFilter;
+//    @Resource
+//    private ExceptionHandlerFilter exceptionHandlerFilter;
 
     /**
      * token认证过滤器

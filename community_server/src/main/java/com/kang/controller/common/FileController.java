@@ -5,7 +5,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.kang.domain.Result;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,43 +29,43 @@ public class FileController {
     @Value("${file.upload.url-pre}")
     private String urlPre;
 
-    private String acceptType=".png.jpg.zip.mp4";
+    private String acceptType = ".png.jpg.zip.mp4";
 
     @PostMapping("/upload")
-    public Result httpUpload(@RequestParam("file")MultipartFile file){
-        Map<String,String> fileUrlMap=new HashMap<>();
+    public Result httpUpload(@RequestParam("file") MultipartFile file) {
+        Map<String, String> fileUrlMap = new HashMap<>();
         String filename = file.getOriginalFilename();
         String fileType = filename.substring(filename.lastIndexOf("."));
-        if(!acceptType.contains(fileType)){
+        if (!acceptType.contains(fileType)) {
             return Result.error("上传失败:不支持该类型文件的上传!");
         }
-        String filePath="";
+        String filePath = "";
         //当前日期字符串:today = 2019-09-17
-        String[] dateArr= DateUtil.today().split("-");
-        switch (fileType){
+        String[] dateArr = DateUtil.today().split("-");
+        switch (fileType) {
             case ".png":
             case ".jpg":
-                filePath=uploadFilePath+"/img/";
+                filePath = uploadFilePath + "/img/";
                 break;
             case ".zip":
-                filePath=uploadFilePath+"/zip/";
+                filePath = uploadFilePath + "/zip/";
                 break;
             case ".mp4":
-                filePath=uploadFilePath+"/mp4";
+                filePath = uploadFilePath + "/mp4";
                 break;
         }
         // 加个时间戳保证文件名唯一
         String newFileName = System.currentTimeMillis() + "_" + filename;
-        StringBuilder path= StrUtil.builder(filePath,dateArr[0],"/",dateArr[1],"/",dateArr[2],"/",newFileName);
-        File dest=new File(path.toString());
-        if(!dest.getParentFile().exists()){
+        StringBuilder path = StrUtil.builder(filePath, dateArr[0], "/", dateArr[1], "/", dateArr[2], "/", newFileName);
+        File dest = new File(path.toString());
+        if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
         }
         try {
-            String url=urlPre+"/resource"+dest.getAbsolutePath().split("uploadFile")[1].replace("\\","/");
+            String url = urlPre + "/resource" + dest.getAbsolutePath().split("uploadFile")[1].replace("\\", "/");
             file.transferTo(dest);
-            fileUrlMap.put("name",filename);
-            fileUrlMap.put("url",url);
+            fileUrlMap.put("name", filename);
+            fileUrlMap.put("url", url);
         } catch (Exception e) {
             return Result.error("上传失败！未知错误");
         }
@@ -75,52 +74,52 @@ public class FileController {
 
 
     @GetMapping("/download")
-    public Result download(String url, HttpServletResponse response) throws UnsupportedEncodingException{
-        if(null!=url){
-            String path=uploadFilePath+url.split("resource/")[1];  // 文件名
+    public Result download(String url, HttpServletResponse response) throws UnsupportedEncodingException {
+        if (null != url) {
+            String path = uploadFilePath + url.split("resource/")[1];  // 文件名
             // 设置文件路径
-            File file=new File(path);
-            if(file.exists()){
+            File file = new File(path);
+            if (file.exists()) {
                 String fileName = file.getName();
-                int index=fileName.indexOf("_");
-                fileName=fileName.substring(index+1);
+                int index = fileName.indexOf("_");
+                fileName = fileName.substring(index + 1);
                 response.setContentType("application/octet-stream");
-                response.addHeader("Content-Disposition","attachment;fileName="+ URLEncoder.encode(fileName,"utf-8")); // 设置文件名
-                byte[] buffer=new byte[1024];
-                OutputStream os=null;
-                FileInputStream fis=null;
-                BufferedInputStream bis=null;
-                try{
-                    os= response.getOutputStream();
-                    fis=new FileInputStream(file);
-                    bis=new BufferedInputStream(fis);
-                    int i=bis.read(buffer);
-                    while (i!=-1){
-                        os.write(buffer,0,i);
-                        i=bis.read(buffer);
+                response.addHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileName, "utf-8")); // 设置文件名
+                byte[] buffer = new byte[1024];
+                OutputStream os = null;
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                try {
+                    os = response.getOutputStream();
+                    fis = new FileInputStream(file);
+                    bis = new BufferedInputStream(fis);
+                    int i = bis.read(buffer);
+                    while (i != -1) {
+                        os.write(buffer, 0, i);
+                        i = bis.read(buffer);
                     }
                     return Result.success();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                }finally {
-                    if(bis!=null){
+                } finally {
+                    if (bis != null) {
                         try {
                             bis.close();
-                        }catch (IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                    if(fis!=null){
+                    if (fis != null) {
                         try {
                             fis.close();
-                        }catch (IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                    if(os!=null){
+                    if (os != null) {
                         try {
                             os.close();
-                        }catch (IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }

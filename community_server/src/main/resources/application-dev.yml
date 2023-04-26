@@ -43,7 +43,7 @@ spring:
     #发件人名称
     nickname: CoderCommunity
     #授权码
-    password: gquiukxubwvrgdii
+    password: aslvmklpoisvjebe
     properties:
       mail:
         smtp:

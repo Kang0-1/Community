@@ -16,7 +16,9 @@ import java.io.IOException;
  * @description 处理 filter 中抛出的异常 ( 通过把 异常处理filter 放在 业务filter 前面 )
  * @date 2023/4/4 20:01
  */
-@Component
+// 目前不用，会引起org.springframework.http.converter.HttpMessageNotWritableException
+// 和 java.io.IOException: 你的主机中的软件中止了一个已建立的连接。
+//@Component
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Resource(name = "handlerExceptionResolver")

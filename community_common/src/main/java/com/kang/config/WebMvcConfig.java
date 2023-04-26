@@ -48,7 +48,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     /**
      * 配置本地资源映射路径
-     * @param registry z
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
